@@ -15,16 +15,16 @@ import java.util.List;
 public class StudentController {
     @Autowired
     private StudentService studentService;
-    private static final String HASH_VALUE = "Student";
+    private static final String HASH_KEY = "Student";
 
     @GetMapping("/{id}")
-    @Cacheable(value = HASH_VALUE, key = "#id")
+    @Cacheable(value = HASH_KEY, key = "#id")
     public Student findStudentById(@PathVariable("id") long id) {
         return studentService.findById(id);
     }
 
     @PostMapping
-    @CachePut(value = HASH_VALUE, key = "#student.id")
+    @CachePut(value = HASH_KEY, key = "#student.id")
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);
     }
@@ -35,7 +35,7 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    @CacheEvict(value = HASH_VALUE, key = "#id")
+    @CacheEvict(value = HASH_KEY, key = "#id")
     public void deleteStudentById(@PathVariable("id") long id) {
         studentService.deleteStudent(id);
     }
